@@ -8,10 +8,14 @@
 
 import UIKit
 import MapKit
+import PromiseKit
 
 class MapViewController: UIViewController {
 
-    @IBOutlet var mapView: MKMapView!
+    @IBOutlet private var mapView: MKMapView!
+    
+    private let locationManager = CLLocationManager()
+
     
     private let orsTiles: MKTileOverlay = {
         let tileOverlay = MKTileOverlay(URLTemplate: Constants.ORSTilesURLTemplate)
@@ -25,11 +29,31 @@ class MapViewController: UIViewController {
         return MKMapRectForCoordinateRegion(region)
     }()
 
+    private let displayEdgePadding: UIEdgeInsets = UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mapView.addOverlay(orsTiles)
         mapView.visibleMapRect = defaultMapRect
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let kip = CLLocationCoordinate2D(latitude: 49.416405, longitude: 8.671716)
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            requestRouteFromUserLocation(to: kip, transportationMode: .bicycle).then { route -> Void in
+                var routeCoordinates = route.coordinates
+                if routeCoordinates.count > 0 {
+                    let routeOverlay = MKPolyline(coordinates: &routeCoordinates, count: routeCoordinates.count)
+                    self.mapView.addOverlay(routeOverlay)
+                    self.mapView.setVisibleMapRect(routeOverlay.boundingMapRect, edgePadding: self.displayEdgePadding, animated: animated)
+                }
+            }
+        }
     }
     
 }
@@ -43,11 +67,19 @@ extension MapViewController: MKMapViewDelegate {
             let tileOverlayRenderer = MKTileOverlayRenderer(tileOverlay: orsTiles)
             return tileOverlayRenderer
             
+        case let route as MKPolyline:
+            let routeOverlayRenderer = MKPolylineRenderer(polyline: route)
+            routeOverlayRenderer.strokeColor = UIColor.blackColor()
+            routeOverlayRenderer.lineWidth = 6
+            return routeOverlayRenderer
+            
         default:
             fatalError("Could not find renderer for unexpected overlay \(overlay).")
             
         }
     }
+    
+
 }
 
 func MKMapRectForCoordinateRegion(region: MKCoordinateRegion) -> MKMapRect
