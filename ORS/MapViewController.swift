@@ -14,8 +14,25 @@ class MapViewController: UIViewController {
 
     @IBOutlet private var mapView: MKMapView!
     
+    private var routeOverlay: MKOverlay?
+    
     private let locationManager = CLLocationManager()
-
+    
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: self.searchResultsViewController)
+        searchController.searchResultsUpdater = self.searchResultsViewController
+        searchController.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        self.definesPresentationContext = true
+        return searchController
+    }()
+    
+    private lazy var searchResultsViewController: SearchResultsViewController = {
+        let viewController = SearchResultsViewController(style: .Plain)
+        viewController.delegate = self
+        return viewController
+    }()
     
     private let orsTiles: MKTileOverlay = {
         let tileOverlay = MKTileOverlay(URLTemplate: Constants.ORSTilesURLTemplate)
@@ -36,25 +53,51 @@ class MapViewController: UIViewController {
         
         mapView.addOverlay(orsTiles)
         mapView.visibleMapRect = defaultMapRect
+        
+        navigationItem.titleView = searchController.searchBar
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         let kip = CLLocationCoordinate2D(latitude: 49.416405, longitude: 8.671716)
+        presentRoute(from: UserLocation(), to: kip, options: Route.Options(transportationMode: .bicycle), animated: true)
+    }
+    
+    private func presentRoute(from origin: Locatable, to destination: Locatable, options: Route.Options, animated: Bool) {
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
         } else {
-            requestRouteFromUserLocation(to: kip, transportationMode: .bicycle).then { route -> Void in
-                var routeCoordinates = route.coordinates
+            Route.request(from: origin, to: destination, options: options).then { route -> Void in
+                var routeCoordinates = route.waypoints
                 if routeCoordinates.count > 0 {
+                    if let previousRouteOverlay = self.routeOverlay {
+                        self.mapView.removeOverlay(previousRouteOverlay)
+                    }
                     let routeOverlay = MKPolyline(coordinates: &routeCoordinates, count: routeCoordinates.count)
                     self.mapView.addOverlay(routeOverlay)
+                    self.routeOverlay = routeOverlay
                     self.mapView.setVisibleMapRect(routeOverlay.boundingMapRect, edgePadding: self.displayEdgePadding, animated: animated)
                 }
             }
         }
     }
+
+    
+    // MARK: User Interaction
+    
+}
+
+extension MapViewController: SearchResultsViewControllerDelegate {
+    
+    func searchResultsViewController(controller: SearchResultsViewController, didSelectLocation location: Location) {
+        searchController.active = false
+        presentRoute(from: UserLocation(), to: location, options: Route.Options(transportationMode: .bicycle), animated: true)
+    }
+    
+}
+
+extension MapViewController: UISearchControllerDelegate {
     
 }
 
