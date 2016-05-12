@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 import PromiseKit
+import Evergreen
+
 
 class MapViewController: UIViewController {
 
@@ -66,13 +68,6 @@ class MapViewController: UIViewController {
         navigationItem.titleView = searchController.searchBar
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let kip = CLLocationCoordinate2D(latitude: 49.416405, longitude: 8.671716)
-        presentRoute(from: UserLocation(), to: kip, options: Route.Options(transportationMode: .bicycle), animated: true)
-    }
-    
     private func presentRoute(from origin: Locatable, to destination: Locatable, options: Route.Options, animated: Bool) {
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
@@ -114,6 +109,37 @@ class MapViewController: UIViewController {
         self.clearSelectedLocationAnnotation(animated: true)
         let selectedLocationAnnotation = self.annotate(location, animated: true)
         self.selectedLocationAnnotation = selectedLocationAnnotation
+        
+        let logger = Evergreen.getLogger("AccessibilityAnalysis")
+        openLocationService.request(.accessibility(position: location.coordinate, transportationMode: .bicycle, time: 10*60, interval: 5*60)) { result in
+            switch result {
+                
+            case .Success(let response):
+                do {
+                    try response.filterSuccessfulStatusCodes()
+                } catch {
+                    logger.error("Invalid status code \(response.statusCode)", error: error)
+                    return
+                }
+                let accessibleArea: AccessibleArea
+                do {
+                    accessibleArea = try response.mapAccessibleArea(around: location.coordinate)
+                    logger.debug("Found accessibility \(accessibleArea).")
+                } catch {
+                    logger.error("Unable to parse response to geocoded locations.", error: error)
+                    return
+                }
+                
+                for isochrone in accessibleArea.isochrones {
+                    var borderCoordinates = isochrone.coordinates
+                    let border = MKPolygon(coordinates: &borderCoordinates, count: borderCoordinates.count)
+                    self.mapView.addOverlay(border)
+                }
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
     }
     
 }
@@ -220,10 +246,17 @@ extension MapViewController: MKMapViewDelegate {
             return tileOverlayRenderer
             
         case let route as MKPolyline:
-            let routeOverlayRenderer = MKPolylineRenderer(polyline: route)
-            routeOverlayRenderer.strokeColor = UIColor.brandColor()
-            routeOverlayRenderer.lineWidth = 6
-            return routeOverlayRenderer
+            let overlayRenderer = MKPolylineRenderer(polyline: route)
+            overlayRenderer.strokeColor = UIColor.brandColor()
+            overlayRenderer.lineWidth = 6
+            return overlayRenderer
+            
+        case let accessibleArea as MKPolygon:
+            let overlayRenderer = MKPolygonRenderer(polygon: accessibleArea)
+            overlayRenderer.strokeColor = UIColor.brandColor()
+            overlayRenderer.lineWidth = 3
+            overlayRenderer.fillColor = UIColor.brandColor().colorWithAlphaComponent(0.2)
+            return overlayRenderer
             
         default:
             fatalError("Could not find renderer for unexpected overlay \(overlay).")

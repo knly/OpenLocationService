@@ -16,6 +16,7 @@ internal let openLocationService = MoyaProvider<OpenLocationService>()
 internal enum OpenLocationService: Moya.TargetType {
     case route(start: CLLocationCoordinate2D, end: CLLocationCoordinate2D, transportationMode: TransportationMode)
     case geocode(freeFormAddress: String, maxResponses: Int)
+    case accessibility(position: CLLocationCoordinate2D, transportationMode: TransportationMode, time: NSTimeInterval, interval: NSTimeInterval)
     
     var baseURL: NSURL { return NSURL(string: "http://openls.geog.uni-heidelberg.de")! }
     
@@ -23,6 +24,7 @@ internal enum OpenLocationService: Moya.TargetType {
         switch self {
         case .route: return "/route"
         case .geocode: return "/geocode"
+        case .accessibility: return "/analyse"
         }
     }
     
@@ -37,14 +39,7 @@ internal enum OpenLocationService: Moya.TargetType {
                 "via": "",
                 "lang": "de",
                 "distunit": "KM",
-                "routepref": {
-                    switch transportationMode {
-                    case .pedestrian: return "Pedestrian"
-                    case .bicycle: return "Bicycle"
-                    case .wheelchair: return "Wheelchair"
-                    case .car: return "Car"
-                    }
-                }(),
+                "routepref": transportationMode.olsIdentifier,
                 "weighting": "Recommended",
                 "avoidAreas": "",
                 "useTMC": "false",
@@ -59,6 +54,14 @@ internal enum OpenLocationService: Moya.TargetType {
             return [
                 "FreeFormAdress": freeFormAddress,
                 "MaxResponse": maxResponses,
+            ]
+        case .accessibility(position: let position, transportationMode: let transportationMode, time: let time, interval: let interval):
+            return [
+                "position": "\(position.longitude),\(position.latitude)",
+                "routePreference": transportationMode.olsIdentifier,
+                "minutes": time / 60,
+                "method": "TIN",
+                "interval": interval,
             ]
         }
     }
@@ -116,6 +119,49 @@ internal enum OpenLocationService: Moya.TargetType {
                 "</xls:GeocodeResponse>" +
                 "</xls:Response>" +
                 "</xls:XLS>").dataUsingEncoding(NSUTF8StringEncoding)!
+        case .accessibility(position: let position, transportationMode: let transportationMode, time: let time, interval: let interval):
+            return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                "<aas:AAS xmlns:aas=\"http://www.geoinform.fh-mainz.de/aas\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:gml=\"http://www.opengis.net/gml\" version=\"1.0\" xsi:schemaLocation=\"http://www.geoinform.fh-mainz.de/aas D:/Schemata/AAS1.0/AccessibilityService.xsd\">" +
+                "<aas:ResponseHeader xsi:type=\"aas:ResponseHeaderType\"/>" +
+                "<aas:Response xsi:type=\"aas:ResponseType\" requestID=\"00\" version=\"1.0\">" +
+                "<aas:AccessibilityResponse xsi:type=\"aas:AccessibilityResponseType\">" +
+                "<aas:AccessibilitySummary>" +
+                "<aas:NumberOfLocations>0</aas:NumberOfLocations>" +
+                "<aas:BoundingBox srsName=\"EPSG:4326\">" +
+                "<gml:pos>8.6560057 49.4291188</gml:pos>" +
+                "<gml:pos>8.6640317 49.4315007</gml:pos>" +
+                "</aas:BoundingBox>" +
+                "</aas:AccessibilitySummary>" +
+                "<aas:AccessibilityGeometry>" +
+                "<aas:Isochrone time=\"60.0\">" +
+                "<aas:IsochroneGeometry area=\"181186.92\">" +
+                "<gml:Polygon srsName=\"EPSG:4326\">" +
+                "<gml:exterior>" +
+                "<gml:LinearRing xsi:type=\"gml:LinearRingType\">" +
+                "<gml:pos>8.6580154 49.4295109</gml:pos>" +
+                "<gml:pos>8.6580154 49.4295109</gml:pos>" +
+                "<gml:pos>8.6580154 49.4295109</gml:pos>" +
+                "</gml:LinearRing>" +
+                "</gml:exterior>" +
+                "</gml:Polygon>" +
+                "</aas:IsochroneGeometry>" +
+                "</aas:Isochrone>" +
+                "</aas:AccessibilityGeometry>" +
+                "</aas:AccessibilityResponse>" +
+                "</aas:Response>" +
+                "</aas:AAS>").dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
+}
+
+private extension TransportationMode {
+    
+    var olsIdentifier: String {
+        switch self {
+        case .pedestrian: return "Pedestrian"
+        case .bicycle: return "Bicycle"
+        case .wheelchair: return "Wheelchair"
+        case .car: return "Car"
         }
     }
 }
@@ -286,6 +332,50 @@ struct Address {
         postalAddress.country = country
         postalAddress.ISOCountryCode = ISOCountryCode
         return formatter.stringFromPostalAddress(postalAddress)
+    }
+    
+}
+
+struct AccessibleArea {
+    
+    let origin: CLLocationCoordinate2D
+    let isochrones: [Isochrone]
+    
+}
+
+struct Isochrone {
+    
+    let time: NSTimeInterval
+    let coordinates: [CLLocationCoordinate2D]
+    
+}
+
+extension Moya.Response {
+    
+    func mapAccessibleArea(around origin: CLLocationCoordinate2D) throws -> AccessibleArea {
+        let xmlString = try self.mapString()
+        let responseXML = SWXMLHash.parse(xmlString)
+        let accessibilityXML = responseXML["aas:AAS"]["aas:Response"]["aas:AccessibilityResponse"]
+        if case .XMLError(let error) = accessibilityXML {
+            throw error
+        }
+        let isochrones: [Isochrone] = accessibilityXML["aas:AccessibilityGeometry"]["aas:Isochrone"].all.flatMap { isochroneXML in
+            guard let timeString = isochroneXML.element?.attributes["time"], time = NSTimeInterval(timeString) else {
+                return nil
+            }
+            let border = isochroneXML["aas:IsochroneGeometry"]["gml:Polygon"]["gml:exterior"]["gml:LinearRing"]["gml:pos"].all.flatMap({ xmlCoordinate -> CLLocationCoordinate2D? in
+                guard let coordinateStrings = xmlCoordinate.element?.text?.componentsSeparatedByString(" ") else {
+                    return nil
+                }
+                guard let latitude = Double(coordinateStrings[1]), let longitude = Double(coordinateStrings[0]) else {
+                    return nil
+                }
+                return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            })
+            return Isochrone(time: time, coordinates: border)
+        }
+        
+        return AccessibleArea(origin: origin, isochrones: isochrones)
     }
     
 }

@@ -95,7 +95,6 @@ extension SearchResultsViewController: UISearchResultsUpdating {
                     logger.error("Unable to parse response to geocoded locations.", error: error)
                     return
                 }
-                break
                 
             case .Failure(let error):
                 print(error)
