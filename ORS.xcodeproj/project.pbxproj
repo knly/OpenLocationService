@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		872B387C1CE50DC10044FCFA /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B387B1CE50DC10044FCFA /* RouteButton.swift */; };
+		872B387E1CE50F2B0044FCFA /* TransportModeIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 872B387D1CE50F2B0044FCFA /* TransportModeIcons.xcassets */; };
 		873FC9651CE36C3000A3EE3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC9641CE36C3000A3EE3A /* AppDelegate.swift */; };
 		873FC9671CE36C3000A3EE3A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC9661CE36C3000A3EE3A /* MapViewController.swift */; };
 		873FC96A1CE36C3000A3EE3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873FC9681CE36C3000A3EE3A /* Main.storyboard */; };
@@ -25,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		6899A6D0E334034F5780C3FA /* Pods-ORS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ORS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ORS/Pods-ORS.release.xcconfig"; sourceTree = "<group>"; };
+		872B387B1CE50DC10044FCFA /* RouteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteButton.swift; sourceTree = "<group>"; };
+		872B387D1CE50F2B0044FCFA /* TransportModeIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TransportModeIcons.xcassets; sourceTree = "<group>"; };
 		873FC9611CE36C3000A3EE3A /* ORS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ORS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		873FC9641CE36C3000A3EE3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		873FC9661CE36C3000A3EE3A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 				873FC9841CE3930E00A3EE3A /* Model */,
 				873FC9851CE3932000A3EE3A /* Common */,
 				873FC96B1CE36C3000A3EE3A /* Assets.xcassets */,
+				872B387D1CE50F2B0044FCFA /* TransportModeIcons.xcassets */,
 				873FC9801CE38A0600A3EE3A /* Supporting Files */,
 			);
 			path = ORS;
@@ -143,6 +148,7 @@
 			children = (
 				878D385A1CE3E95E00DC5F28 /* GeocodedLocationCell.swift */,
 				878D385D1CE3E97B00DC5F28 /* GeocodedLocationCell.xib */,
+				872B387B1CE50DC10044FCFA /* RouteButton.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -218,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				878D385E1CE3E97B00DC5F28 /* GeocodedLocationCell.xib in Resources */,
+				872B387E1CE50F2B0044FCFA /* TransportModeIcons.xcassets in Resources */,
 				873FC96F1CE36C3000A3EE3A /* LaunchScreen.storyboard in Resources */,
 				873FC96C1CE36C3000A3EE3A /* Assets.xcassets in Resources */,
 				873FC96A1CE36C3000A3EE3A /* Main.storyboard in Resources */,
@@ -286,6 +293,7 @@
 				873FC9791CE3866C00A3EE3A /* Route.swift in Sources */,
 				873FC9651CE36C3000A3EE3A /* AppDelegate.swift in Sources */,
 				873FC97B1CE3870F00A3EE3A /* OpenLocationService.swift in Sources */,
+				872B387C1CE50DC10044FCFA /* RouteButton.swift in Sources */,
 				873FC9771CE36DE900A3EE3A /* Constants.swift in Sources */,
 				873FC9821CE38AB800A3EE3A /* CLLocationManager+DetermineUserLocation.swift in Sources */,
 			);

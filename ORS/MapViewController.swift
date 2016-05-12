@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     @IBOutlet private var mapView: MKMapView!
     
     private var routeOverlay: MKOverlay?
+    private var selectedLocationAnnotation: LocationAnnotation?
     
     private let locationManager = CLLocationManager()
     
@@ -26,6 +27,11 @@ class MapViewController: UIViewController {
         searchController.dimsBackgroundDuringPresentation = false
         self.definesPresentationContext = true
         return searchController
+    }()
+    
+    private lazy var longPressGestureRecognizer: UIGestureRecognizer = {
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+        return gestureRecognizer
     }()
     
     private lazy var searchResultsViewController: SearchResultsViewController = {
@@ -51,8 +57,11 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.showsUserLocation = true
         mapView.addOverlay(orsTiles)
         mapView.visibleMapRect = defaultMapRect
+        
+        mapView.addGestureRecognizer(longPressGestureRecognizer)
         
         navigationItem.titleView = searchController.searchBar
     }
@@ -83,8 +92,66 @@ class MapViewController: UIViewController {
         }
     }
 
+    private func clearSelectedLocationAnnotation(animated animated: Bool) {
+        if let selectedLocationAnnotation = self.selectedLocationAnnotation {
+            mapView.removeAnnotation(selectedLocationAnnotation)
+        }
+    }
+    
+    private func annotate(location: MapAnnotation, animated: Bool) -> LocationAnnotation {
+        let annotation = LocationAnnotation(location: location, animatePresentation: animated)
+        mapView.addAnnotation(annotation)
+        return annotation
+    }
     
     // MARK: User Interaction
+    
+    @objc private func longPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        guard case .Began = gestureRecognizer.state else {
+            return
+        }
+        let location = SelectedLocation(coordinate: mapView.convertPoint(gestureRecognizer.locationInView(mapView), toCoordinateFromView: mapView))
+        self.clearSelectedLocationAnnotation(animated: true)
+        let selectedLocationAnnotation = self.annotate(location, animated: true)
+        self.selectedLocationAnnotation = selectedLocationAnnotation
+    }
+    
+}
+
+struct SelectedLocation: Location, MapAnnotation {
+    
+    let coordinate: CLLocationCoordinate2D
+    
+    var title: String? {
+        return NSLocalizedString("Selected Location", comment: "")
+    }
+    
+    var subtitle: String? {
+        return nil
+    }
+    
+}
+
+protocol MapAnnotation: Location {
+    
+    var title: String? { get }
+    var subtitle: String? { get }
+    
+}
+
+class LocationAnnotation: NSObject, MKAnnotation {
+    
+    let location: MapAnnotation
+    let animatePresentation: Bool
+    
+    init(location: MapAnnotation, animatePresentation: Bool) {
+        self.location = location
+        self.animatePresentation = animatePresentation
+    }
+    
+    var coordinate: CLLocationCoordinate2D { return location.coordinate }
+    var title: String? { return location.title }
+    var subtitle: String? { return location.subtitle }
     
 }
 
@@ -101,6 +168,48 @@ extension MapViewController: UISearchControllerDelegate {
     
 }
 
+extension NSUserDefaults {
+    
+    var preferredTransportationMode: TransportationMode? {
+        get {
+            guard let preferredTransportationModeRawValue = (self.valueForKey(Constants.UserDefaultsKey.preferredTransportationMode) as? NSNumber)?.integerValue,
+                preferredTransportationMode = TransportationMode(segmentIndex: preferredTransportationModeRawValue) else {
+                    return nil
+            }
+            return preferredTransportationMode
+        }
+        set {
+            self.setValue(newValue?.segmentIndex, forKey: Constants.UserDefaultsKey.preferredTransportationMode)
+        }
+    }
+    
+}
+
+extension TransportationMode {
+    
+    init?(segmentIndex: Int) {
+        switch segmentIndex {
+        case 0: self = .pedestrian
+        case 1: self = .bicycle
+        case 2: self = .wheelchair
+        case 3: self = .car
+        default: return nil
+        }
+    }
+    
+    var segmentIndex: Int {
+        switch self {
+        case .pedestrian: return 0
+        case .bicycle: return 1
+        case .wheelchair: return 2
+        case .car: return 3
+        }
+    }
+    
+}
+
+
+
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
@@ -112,7 +221,7 @@ extension MapViewController: MKMapViewDelegate {
             
         case let route as MKPolyline:
             let routeOverlayRenderer = MKPolylineRenderer(polyline: route)
-            routeOverlayRenderer.strokeColor = UIColor.blackColor()
+            routeOverlayRenderer.strokeColor = UIColor.brandColor()
             routeOverlayRenderer.lineWidth = 6
             return routeOverlayRenderer
             
@@ -122,6 +231,37 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        switch annotation {
+            
+        case let locationAnnotation as LocationAnnotation:
+            let annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("LocationAnnotation") as? MKPinAnnotationView ?? MKPinAnnotationView(annotation: annotation, reuseIdentifier: "LocationAnnotation")
+            annotationView.annotation = annotation
+            annotationView.animatesDrop = locationAnnotation.animatePresentation
+            annotationView.canShowCallout = true
+            
+            let location = locationAnnotation.location
+            
+            let routeButton = RouteButton(location: location)
+            annotationView.leftCalloutAccessoryView = routeButton
+
+            return annotationView
+            
+        default: return nil
+            
+        }
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        switch (view.annotation, control) {
+        
+        case let (locationAnnotation as LocationAnnotation, routeButton as RouteButton):
+            presentRoute(from: UserLocation(), to: locationAnnotation.location, options: Route.Options(transportationMode: routeButton.transportationMode), animated: true)
+            
+        default: return
+            
+        }
+    }
 
 }
 
