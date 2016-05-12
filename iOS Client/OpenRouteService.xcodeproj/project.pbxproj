@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4EE22149526EEFBAD0CFFEC0 /* Pods_OpenRouteService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DE05A8CF24ED132ED20328 /* Pods_OpenRouteService.framework */; };
+		872B38A41CE52BE70044FCFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 872B38A31CE52BE70044FCFA /* Assets.xcassets */; };
+		872B38B41CE52BF20044FCFA /* kip.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 872B38A51CE52BF20044FCFA /* kip.gpx */; };
+		872B38B51CE52BF20044FCFA /* phw16.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 872B38A61CE52BF20044FCFA /* phw16.gpx */; };
+		872B38B61CE52BF20044FCFA /* GeocodedLocationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 872B38A71CE52BF20044FCFA /* GeocodedLocationCell.xib */; };
+		872B38BA1CE52BF20044FCFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B38AE1CE52BF20044FCFA /* AppDelegate.swift */; };
+		872B38BC1CE52BF20044FCFA /* GeocodedLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B38B01CE52BF20044FCFA /* GeocodedLocationCell.swift */; };
+		872B38BD1CE52BF20044FCFA /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B38B11CE52BF20044FCFA /* SearchResultsViewController.swift */; };
+		872B38BE1CE52BF20044FCFA /* UITableView+Registering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B38B21CE52BF20044FCFA /* UITableView+Registering.swift */; };
+		872B38C21CE52C5B0044FCFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 872B38C01CE52C5B0044FCFA /* Main.storyboard */; };
+		879063A71CE52FE000F93E70 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879063A61CE52FE000F93E70 /* MapViewController.swift */; };
+		879063B01CE537D600F93E70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 879063AE1CE537D600F93E70 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1162DC598FE67923359B94B6 /* Pods-OpenRouteService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenRouteService.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenRouteService/Pods-OpenRouteService.release.xcconfig"; sourceTree = "<group>"; };
+		815A88BE9710CF5FE2B02B8F /* Pods-OpenRouteService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenRouteService.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenRouteService/Pods-OpenRouteService.debug.xcconfig"; sourceTree = "<group>"; };
+		872B38A31CE52BE70044FCFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = OpenRouteService/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		872B38A51CE52BF20044FCFA /* kip.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = kip.gpx; path = OpenRouteService/kip.gpx; sourceTree = SOURCE_ROOT; };
+		872B38A61CE52BF20044FCFA /* phw16.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = phw16.gpx; path = OpenRouteService/phw16.gpx; sourceTree = SOURCE_ROOT; };
+		872B38A71CE52BF20044FCFA /* GeocodedLocationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeocodedLocationCell.xib; path = OpenRouteService/GeocodedLocationCell.xib; sourceTree = SOURCE_ROOT; };
+		872B38AD1CE52BF20044FCFA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = OpenRouteService/Info.plist; sourceTree = SOURCE_ROOT; };
+		872B38AE1CE52BF20044FCFA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = OpenRouteService/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		872B38B01CE52BF20044FCFA /* GeocodedLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeocodedLocationCell.swift; path = OpenRouteService/GeocodedLocationCell.swift; sourceTree = SOURCE_ROOT; };
+		872B38B11CE52BF20044FCFA /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultsViewController.swift; path = OpenRouteService/SearchResultsViewController.swift; sourceTree = SOURCE_ROOT; };
+		872B38B21CE52BF20044FCFA /* UITableView+Registering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableView+Registering.swift"; path = "OpenRouteService/UITableView+Registering.swift"; sourceTree = SOURCE_ROOT; };
+		872B38C11CE52C5B0044FCFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenRouteService/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		873FC9611CE36C3000A3EE3A /* OpenRouteService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenRouteService.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		879063A61CE52FE000F93E70 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = OpenRouteService/MapViewController.swift; sourceTree = SOURCE_ROOT; };
+		879063AF1CE537D600F93E70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenRouteService/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		E1DE05A8CF24ED132ED20328 /* Pods_OpenRouteService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenRouteService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		873FC95E1CE36C3000A3EE3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EE22149526EEFBAD0CFFEC0 /* Pods_OpenRouteService.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3588A39D63713B9FD92002C6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E1DE05A8CF24ED132ED20328 /* Pods_OpenRouteService.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		873FC9581CE36C3000A3EE3A = {
+			isa = PBXGroup;
+			children = (
+				873FC9631CE36C3000A3EE3A /* iOS Client */,
+				873FC9621CE36C3000A3EE3A /* Products */,
+				B0566E37A2EB24AC88F03A66 /* Pods */,
+				3588A39D63713B9FD92002C6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		873FC9621CE36C3000A3EE3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				873FC9611CE36C3000A3EE3A /* OpenRouteService.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		873FC9631CE36C3000A3EE3A /* iOS Client */ = {
+			isa = PBXGroup;
+			children = (
+				872B38AE1CE52BF20044FCFA /* AppDelegate.swift */,
+				872B38C01CE52C5B0044FCFA /* Main.storyboard */,
+				873FC9831CE3930400A3EE3A /* View Controller */,
+				878D385C1CE3E96100DC5F28 /* View */,
+				873FC9851CE3932000A3EE3A /* Common */,
+				872B38A31CE52BE70044FCFA /* Assets.xcassets */,
+				873FC9801CE38A0600A3EE3A /* Supporting Files */,
+			);
+			name = "iOS Client";
+			path = ORS;
+			sourceTree = "<group>";
+		};
+		873FC9801CE38A0600A3EE3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				872B38A51CE52BF20044FCFA /* kip.gpx */,
+				872B38A61CE52BF20044FCFA /* phw16.gpx */,
+				879063AE1CE537D600F93E70 /* LaunchScreen.storyboard */,
+				872B38AD1CE52BF20044FCFA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		873FC9831CE3930400A3EE3A /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				879063A61CE52FE000F93E70 /* MapViewController.swift */,
+				872B38B11CE52BF20044FCFA /* SearchResultsViewController.swift */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		873FC9851CE3932000A3EE3A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				872B38B21CE52BF20044FCFA /* UITableView+Registering.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		878D385C1CE3E96100DC5F28 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				872B38A71CE52BF20044FCFA /* GeocodedLocationCell.xib */,
+				872B38B01CE52BF20044FCFA /* GeocodedLocationCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B0566E37A2EB24AC88F03A66 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				815A88BE9710CF5FE2B02B8F /* Pods-OpenRouteService.debug.xcconfig */,
+				1162DC598FE67923359B94B6 /* Pods-OpenRouteService.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		873FC9601CE36C3000A3EE3A /* OpenRouteService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 873FC9731CE36C3000A3EE3A /* Build configuration list for PBXNativeTarget "OpenRouteService" */;
+			buildPhases = (
+				C690C52C194E49C6961C16A0 /* 📦 Check Pods Manifest.lock */,
+				873FC95D1CE36C3000A3EE3A /* Sources */,
+				873FC95E1CE36C3000A3EE3A /* Frameworks */,
+				873FC95F1CE36C3000A3EE3A /* Resources */,
+				73E090F3E5311526A73C44C4 /* 📦 Embed Pods Frameworks */,
+				35BDF9B9725D6141E975957D /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenRouteService;
+			productName = ORS;
+			productReference = 873FC9611CE36C3000A3EE3A /* OpenRouteService.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		873FC9591CE36C3000A3EE3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Geographisches Institut der Universität Heidelberg, Abteilung Geoinformatik";
+				TargetAttributes = {
+					873FC9601CE36C3000A3EE3A = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 873FC95C1CE36C3000A3EE3A /* Build configuration list for PBXProject "OpenRouteService" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 873FC9581CE36C3000A3EE3A;
+			productRefGroup = 873FC9621CE36C3000A3EE3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				873FC9601CE36C3000A3EE3A /* OpenRouteService */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		873FC95F1CE36C3000A3EE3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				872B38C21CE52C5B0044FCFA /* Main.storyboard in Resources */,
+				872B38B41CE52BF20044FCFA /* kip.gpx in Resources */,
+				872B38B51CE52BF20044FCFA /* phw16.gpx in Resources */,
+				879063B01CE537D600F93E70 /* LaunchScreen.storyboard in Resources */,
+				872B38B61CE52BF20044FCFA /* GeocodedLocationCell.xib in Resources */,
+				872B38A41CE52BE70044FCFA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35BDF9B9725D6141E975957D /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenRouteService/Pods-OpenRouteService-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		73E090F3E5311526A73C44C4 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenRouteService/Pods-OpenRouteService-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C690C52C194E49C6961C16A0 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		873FC95D1CE36C3000A3EE3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				872B38BE1CE52BF20044FCFA /* UITableView+Registering.swift in Sources */,
+				879063A71CE52FE000F93E70 /* MapViewController.swift in Sources */,
+				872B38BD1CE52BF20044FCFA /* SearchResultsViewController.swift in Sources */,
+				872B38BC1CE52BF20044FCFA /* GeocodedLocationCell.swift in Sources */,
+				872B38BA1CE52BF20044FCFA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		872B38C01CE52C5B0044FCFA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				872B38C11CE52C5B0044FCFA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		879063AE1CE537D600F93E70 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				879063AF1CE537D600F93E70 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		873FC9711CE36C3000A3EE3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		873FC9721CE36C3000A3EE3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		873FC9741CE36C3000A3EE3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 815A88BE9710CF5FE2B02B8F /* Pods-OpenRouteService.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "$(SRCROOT)/OpenRouteService/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-heidelberg.geog.gis.OpenRouteService";
+				PRODUCT_NAME = OpenRouteService;
+			};
+			name = Debug;
+		};
+		873FC9751CE36C3000A3EE3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1162DC598FE67923359B94B6 /* Pods-OpenRouteService.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "$(SRCROOT)/OpenRouteService/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-heidelberg.geog.gis.OpenRouteService";
+				PRODUCT_NAME = OpenRouteService;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		873FC95C1CE36C3000A3EE3A /* Build configuration list for PBXProject "OpenRouteService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				873FC9711CE36C3000A3EE3A /* Debug */,
+				873FC9721CE36C3000A3EE3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		873FC9731CE36C3000A3EE3A /* Build configuration list for PBXNativeTarget "OpenRouteService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				873FC9741CE36C3000A3EE3A /* Debug */,
+				873FC9751CE36C3000A3EE3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 873FC9591CE36C3000A3EE3A /* Project object */;
+}

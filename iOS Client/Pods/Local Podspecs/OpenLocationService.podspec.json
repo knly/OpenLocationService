@@ -1,0 +1,41 @@
+{
+  "name": "OpenLocationService",
+  "version": "0.1.0",
+  "summary": "A short description of OpenLocationService.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/knly/OpenLocationService",
+  "license": "MIT",
+  "authors": {
+    "Nils Fischer": "n.fischer@viwid.com"
+  },
+  "source": {
+    "git": "https://github.com/knly/OpenLocationService.git",
+    "tag": "v0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "Sources/OpenLocationService/**/*",
+  "resource_bundles": {
+    "OpenLocationService": "Resources/**/*"
+  },
+  "frameworks": [
+    "Foundation",
+    "UIKit",
+    "MapKit"
+  ],
+  "dependencies": {
+    "Evergreen": [
+
+    ],
+    "Moya": [
+
+    ],
+    "PromiseKit/CorePromise": [
+
+    ],
+    "SWXMLHash": [
+
+    ]
+  }
+}

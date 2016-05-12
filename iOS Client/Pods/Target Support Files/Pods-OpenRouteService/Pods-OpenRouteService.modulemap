@@ -1,0 +1,6 @@
+framework module Pods_OpenRouteService {
+  umbrella header "Pods-OpenRouteService-umbrella.h"
+
+  export *
+  module * { export * }
+}
